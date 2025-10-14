@@ -1,0 +1,39 @@
+openapi: 3.0.1
+info:
+  title: Dock Digital API
+  version: '1.0'
+servers:
+  - url: http://localhost:8080/api/v1
+paths:
+  /portadores:
+    post:
+      summary: Criar portador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                cpf:
+                  type: string
+      responses:
+        '201':
+          description: Portador criado
+  /contas:
+    post:
+      summary: Criar conta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpfPortador:
+                  type: string
+      responses:
+        '201':
+          description: Conta criada
