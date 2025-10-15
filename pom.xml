@@ -16,7 +16,7 @@
   <artifactId>dock-digital</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>dock-digital</name>
-  <description>Adicionar descrição</description>
+  <description>Banking API</description>
 
   <properties>
     <springdoc.version>2.8.6</springdoc.version>
