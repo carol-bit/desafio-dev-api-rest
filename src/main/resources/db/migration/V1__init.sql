@@ -1,28 +1,34 @@
-CREATE TABLE portador (
+CREATE TABLE holder (
   id UUID PRIMARY KEY,
-  nome VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
   cpf VARCHAR(11) NOT NULL UNIQUE,
-  criado_em TIMESTAMP DEFAULT now()
+  created_at TIMESTAMP DEFAULT now()
 );
 
-CREATE TABLE conta (
+---
+
+CREATE TABLE account (
   id UUID PRIMARY KEY,
-  numero VARCHAR(20) NOT NULL,
-  agencia VARCHAR(10) NOT NULL,
-  portador_id UUID NOT NULL REFERENCES portador(id),
-  saldo NUMERIC(19,2) DEFAULT 0 NOT NULL,
-  ativa BOOLEAN DEFAULT TRUE,
-  bloqueada BOOLEAN DEFAULT FALSE,
-  ultimo_saque_dia DATE,
-  total_saque_hoje NUMERIC(19,2) DEFAULT 0,
-  criado_em TIMESTAMP DEFAULT now()
+  number VARCHAR(20) NOT NULL,
+  branch VARCHAR(10) NOT NULL, -- Agência
+  holder_cpf VARCHAR(11) NOT NULL, -- CPF do Titular
+  balance NUMERIC(19,2) DEFAULT 0 NOT NULL, -- Saldo
+
+  status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE', -- Status
+
+  is_blocked BOOLEAN DEFAULT FALSE, -- Bloqueada
+  last_daily_withdrawal_date DATE, -- Último saque do dia
+  total_daily_withdrawal NUMERIC(19,2) DEFAULT 0, -- Total saque hoje
+  created_at TIMESTAMP DEFAULT now()
 );
 
-CREATE TABLE transacao (
+---
+
+CREATE TABLE transaction (
   id UUID PRIMARY KEY,
-  conta_id UUID NOT NULL REFERENCES conta(id),
-  tipo VARCHAR(20) NOT NULL,
-  valor NUMERIC(19,2) NOT NULL,
-  data_hora TIMESTAMP DEFAULT now(),
-  descricao VARCHAR(255)
+  account_id UUID NOT NULL REFERENCES account(id),
+  type VARCHAR(20) NOT NULL,
+  amount NUMERIC(19,2) NOT NULL, -- Valor
+  timestamp TIMESTAMP DEFAULT now(), -- Data/Hora
+  description VARCHAR(255)
 );

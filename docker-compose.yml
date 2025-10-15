@@ -1,35 +1,33 @@
+version: '3.8'
+
 services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: dock-digital-db
+  # Serviço de Aplicação Spring Boot
+  dock-digital-app:
+    build: .
+    ports:
+      - "8080:8080"
     environment:
+      # Variáveis que apontam para o PostgreSQL
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/dockdb
+      SPRING_DATASOURCE_USERNAME: dockuser
+      SPRING_DATASOURCE_PASSWORD: dockpass
+    depends_on:
+      - postgres
+
+  # Serviço de Banco de Dados PostgreSQL
+  postgres:
+    image: postgres:15
+    container_name: postgres_dock_db
+    environment:
+      # Variáveis usadas pelo container Postgres para criar o DB e o Usuário
       POSTGRES_DB: dockdb
       POSTGRES_USER: dockuser
       POSTGRES_PASSWORD: dockpass
     ports:
       - "5432:5432"
     volumes:
+      # O volume garante que os dados sejam persistidos entre reinicializações
       - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U dockuser"]
-      interval: 10s
-      retries: 5
-
-  app:
-    build: .
-    container_name: dock-digital-app
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/dockdb
-      SPRING_DATASOURCE_USERNAME: dockuser
-      SPRING_DATASOURCE_PASSWORD: dockpass
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: "true"
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
 
 volumes:
   postgres_data:

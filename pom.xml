@@ -23,10 +23,25 @@
     <spring-cloud.version>2025.0.0</spring-cloud.version>
     <java.version>17</java.version>
     <lombok.version>1.18.28</lombok.version>
+    <mapstruct.version>1.6.3</mapstruct.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>${mapstruct.version}</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>${mapstruct.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-config</artifactId>
@@ -90,7 +105,7 @@
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-      <version>2.6.0</version>
+      <version>${springdoc.version}</version>
     </dependency>
 
     <!-- Testes -->
@@ -126,6 +141,11 @@
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
               <version>${lombok.version}</version>
+            </path>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
